@@ -15,3 +15,13 @@ I've been meaning to play with [Spruceleaf ](https://github.com/MastodonC/spruce
 - find sample CSV file with data in correct shape
   - tidy up CSV if necessary
 - dick about in atom and a browser
+
+### Build the shapes
+
+I got my hands on the layers from ONS.
+
+I open ed it up in QGIS. It's not the prettiest app, but it was able to help me understand what I'm looking at.
+
+```
+ogrinfo -al -so ./data/GB/district_borough_unitary_ward_region.shp
+```

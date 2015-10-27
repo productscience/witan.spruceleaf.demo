@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+/* CSS goes here. */
+
+</style>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.19/topojson.min.js"></script>
+<script>
+
+
+var width = 960,
+    height = 1160;
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+var path = d3.geo.path()
+    // .projection(projection);
+
+var MC = {};
+
+d3.json("gla.wards.json", function(error, wards) {
+  if (error) return console.error(error);
+
+  console.log(wards)
+
+  MC.wards = wards;
+  MC.londonWards = londonWards = topojson.feature(MC.wards, MC.wards.objects.londonWards).features;
+
+  svg.selectAll("path")
+    .data(londonWards.slice(0,2)).enter()
+      // testing we can retrieve the bits
+      .append('path')
+      .attr('class', function(d) { return "ward-" + d.id })
+      .attr('data-name', function(d) { return d.properties.name })
+      // pass the coordinates through the albus projection, so we know where
+      // they should go on the map. Our coords are WAAAAAy out...
+      .attr('d', path)
+
+
+
+
+
+});
+</script>
