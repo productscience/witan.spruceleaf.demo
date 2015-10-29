@@ -12,38 +12,35 @@
 
 
 var width = 960,
-    height = 1160;
+    height = 600;
 
 var svg = d3.select("body").append("svg")
     .attr("width", width)
     .attr("height", height);
 
-var path = d3.geo.path()
-    // .projection(projection);
+var projection = d3.geo.albers()
+    .center([4.3, 51.49])
+    .rotate([4.4, 0])
+    .parallels([50, 60])
+    .scale(80000)
+    .translate([width / 2, height / 2]);
+
+var path = d3.geo.path().projection(projection);
 
 var MC = {};
 
 d3.json("gla.wards.json", function(error, wards) {
   if (error) return console.error(error);
 
-  console.log(wards)
-
   MC.wards = wards;
   MC.londonWards = londonWards = topojson.feature(MC.wards, MC.wards.objects.londonWards).features;
 
-  svg.selectAll("path")
-    .data(londonWards.slice(0,2)).enter()
-      // testing we can retrieve the bits
+  svg.selectAll("path").data(londonWards)
+      .enter()
       .append('path')
       .attr('class', function(d) { return "ward-" + d.id })
       .attr('data-name', function(d) { return d.properties.name })
-      // pass the coordinates through the albus projection, so we know where
-      // they should go on the map. Our coords are WAAAAAy out...
-      .attr('d', path)
-
-
-
-
+      .attr('d', path);
 
 });
 </script>
