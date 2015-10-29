@@ -2,7 +2,11 @@
 <meta charset="utf-8">
 <style>
 
-/* CSS goes here. */
+path.ward {
+  fill: #ccc;
+  stroke: #888;
+
+}
 
 </style>
 <body>
@@ -33,14 +37,15 @@ d3.json("gla.wards.json", function(error, wards) {
   if (error) return console.error(error);
 
   MC.wards = wards;
-  MC.londonWards = londonWards = topojson.feature(MC.wards, MC.wards.objects.londonWards).features;
+  MC.londonWards = londonWards = topojson.feature(
+    MC.wards, MC.wards.objects.londonWards).features;
 
   svg.selectAll("path").data(londonWards)
       .enter()
       .append('path')
-      .attr('class', function(d) { return "ward-" + d.id })
+      .attr('class', function(d) { return "ward ward-" + d.id })
       .attr('data-name', function(d) { return d.properties.name })
-      .attr('d', path);
+      .attr('d', path)
 
 });
 </script>
